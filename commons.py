@@ -49,7 +49,8 @@ def features(bgr, channels, filter_white=True):
     bgr_flat = flatten(bgr)
     
     f = np.concatenate((bgr_flat, hsv_flat, cmyk_flat, lab_flat),1)
-    f = [x for x in f if not np.sum(x[:3] == [255,255,255]) == 3] #remove white pixels
+    if filter_white:
+        f = [x for x in f if not np.sum(x[:3] == [255,255,255]) == 3] #remove white pixels
     f = np.array(f)
     channels_map = {'B':0, 'G':1,'R':2,'H':3,'S':4,'V':5,'C':6,'M':7,'Y':8,'K':9,'L':10,'A':11,'b':12}
     channels = list(channels)
